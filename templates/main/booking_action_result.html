@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Bron holati | TrimTime{% endblock %}
+
+{% block content %}
+<section class="confirm-shell">
+    <div class="confirm-card">
+        <p class="eyebrow">Telegram orqali javob</p>
+        <h1>{{ message }}</h1>
+        <p class="hero-copy">
+            Barber: {{ booking.barber.full_name }}<br>
+            Mijoz: {{ booking.client_name }}<br>
+            Vaqt: {{ booking.start_time|date:'d.m.Y H:i' }}
+        </p>
+        <div class="action-row">
+            <a class="button" href="{% url 'home' %}">Home ga qaytish</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

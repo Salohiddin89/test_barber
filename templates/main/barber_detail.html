@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ barber.full_name }} | TrimTime{% endblock %}
+
+{% block content %}
+<section class="detail-layout">
+    <article class="profile-card">
+        <div class="detail-image" style="background-image: url('{{ barber.image_url|default:'https://images.unsplash.com/photo-1503951458645-643d53bfd90f?auto=format&fit=crop&w=900&q=80' }}');"></div>
+        <div class="profile-body">
+            <p class="eyebrow">{{ barber.shop_name }}</p>
+            <h1>{{ barber.full_name }}</h1>
+            <div class="detail-stats">
+                <span>{{ barber.years_experience }} yil tajriba</span>
+                <span>{{ barber.specialty }}</span>
+                <span>{{ barber.work_start|time:'H:i' }} - {{ barber.work_end|time:'H:i' }}</span>
+            </div>
+                <p class="bio">{{ barber.bio }}</p>
+        </div>
+    </article>
+
+    <section class="slots-panel">
+        <div class="section-heading compact">
+            <div>
+                <p class="eyebrow">1 haftalik plan</p>
+                <h2>Bo'sh vaqtlar</h2>
+            </div>
+        </div>
+
+        {% for day in week_slots %}
+            <div class="day-block">
+                <div class="day-head">
+                    <strong>{{ day.weekday }}</strong>
+                    <span>{{ day.label }}</span>
+                </div>
+                <div class="slot-list">
+                    {% for slot in day.slots %}
+                        {% if slot.is_taken %}
+                            <span class="slot-pill blocked">{{ slot.start|time:'H:i' }} X</span>
+                        {% else %}
+                            <a class="slot-pill {% if selected_slot == slot.start|date:'Y-m-d\\TH:i' %}active{% endif %}" href="{% url 'booking_confirm' barber.pk %}?slot={{ slot.start|date:'Y-m-d\\TH:i' }}">{{ slot.start|time:'H:i' }}</a>
+                        {% endif %}
+                    {% empty %}
+                        <span class="slot-empty">Bu kunda bo'sh vaqt yo'q.</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+</section>
+{% endblock %}

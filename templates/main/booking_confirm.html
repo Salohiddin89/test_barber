@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasdiqlash | TrimTime{% endblock %}
+
+{% block content %}
+<section class="confirm-shell">
+    <div class="confirm-card">
+        <p class="eyebrow">Tasdiqlash</p>
+        <h1>Siz rostdan ham {{ barber.full_name }} ga {{ slot_dt|date:'d.m.Y H:i' }} vaqtga yozilmoqchimisiz?</h1>
+        <p class="hero-copy">Tasdiqlasangiz, ismingiz va telefon raqamingiz saqlanadi hamda barberga Telegram orqali xabar yuboriladi.</p>
+
+        <form method="post" class="booking-form">
+            {% csrf_token %}
+            <input type="hidden" name="slot" value="{{ slot_value }}">
+            {% for field in form %}
+                <label class="form-field">
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {% if field.errors %}
+                        <small class="field-error">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </label>
+            {% endfor %}
+            <div class="action-row">
+                <a class="button button-secondary" href="{{ barber.get_absolute_url }}">Ortga</a>
+                <button type="submit" class="button">Tasdiqlash</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

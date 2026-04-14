@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}TrimTime | Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Professional booking</p>
+        <h1>Barberni tanlang va kelgusi 1 haftalik navbatga tez yoziling.</h1>
+        <p class="hero-copy">Admin qo'shgan barbershop ustalari shu yerda chiqadi. Vaqtlar avtomatik shakllanadi, siz esa qulay soatni tanlaysiz.</p>
+    </div>
+    <div class="hero-card">
+        <span>Bugun qulay</span>
+        <strong>08:00 - 19:00</strong>
+        <p>Har bir barber uchun alohida soatlik plan.</p>
+    </div>
+</section>
+
+<section class="section-heading">
+    <div>
+        <p class="eyebrow">Barberlar</p>
+        <h2>Eng mos usta tanlang</h2>
+    </div>
+</section>
+
+<section class="card-grid">
+    {% for barber in barbers %}
+        <article class="barber-card">
+            <div class="barber-image" style="background-image: url('{{ barber.image_url|default:'https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=900&q=80' }}');"></div>
+            <div class="barber-body">
+                <p class="shop-name">{{ barber.shop_name }}</p>
+                <h3>{{ barber.full_name }}</h3>
+                <p>{{ barber.specialty }}</p>
+                <div class="meta-row">
+                    <span>{{ barber.years_experience }} yil staj</span>
+                    <span>{{ barber.work_start|time:'H:i' }} - {{ barber.work_end|time:'H:i' }}</span>
+                </div>
+                <a class="button" href="{{ barber.get_absolute_url }}">Ko'rish va yozilish</a>
+            </div>
+        </article>
+    {% empty %}
+        <div class="empty-card">
+            Hali barber qo'shilmagan. Admin paneldan yangi barber kiriting.
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

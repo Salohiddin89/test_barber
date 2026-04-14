@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Bron yuborildi | TrimTime{% endblock %}
+
+{% block content %}
+<section class="confirm-shell">
+    <div class="confirm-card success">
+        <p class="eyebrow">Bron yaratildi</p>
+        <h1>{{ booking.barber.full_name }} uchun broningiz yaratildi.</h1>
+        <p class="hero-copy">Broningiz saqlandi. Belgilangan sana va vaqtda kelishingiz mumkin. Batafsil ma'lumot Bronlarim sahifasida turadi.</p>
+        <div class="action-row">
+            <a class="button button-secondary" href="{% url 'my_bookings' %}">Bronlarim</a>
+            <a class="button" href="{% url 'home' %}">Home ga qaytish</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

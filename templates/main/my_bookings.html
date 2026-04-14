@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} | TrimTime{% endblock %}
+
+{% block content %}
+<section class="section-heading">
+    <div>
+        <p class="eyebrow">Mening navbatlarim</p>
+        <h1>{{ title }}</h1>
+    </div>
+</section>
+
+<section class="booking-list">
+    {% for booking in bookings %}
+        <article class="booking-card">
+            <div>
+                <div class="booking-time-hero">
+                    <span class="time-label">Bron vaqti</span>
+                    <strong>{{ booking.start_time|date:'d.m.Y' }}</strong>
+                    <b>{{ booking.start_time|time:'H:i' }}</b>
+                </div>
+                <p class="shop-name">{{ booking.barber.shop_name }}</p>
+                <h3>{{ booking.barber.full_name }}</h3>
+                <p>{{ booking.phone_number }}</p>
+            </div>
+            <div class="status-col">
+                <span class="status-badge status-{{ booking.status }}">{{ booking.get_status_display }}</span>
+                {% if booking.status == 'accepted' %}
+                    <p>Bron saqlangan. Belgilangan vaqtda kelishingiz mumkin.</p>
+                {% elif booking.status == 'pending' %}
+                    <p>Bron yaratildi va navbat ro'yxatiga qo'shildi.</p>
+                {% elif booking.status == 'completed' %}
+                    <p>Bron yakunlangan.</p>
+                {% else %}
+                    <p>Bu bron bekor qilingan.</p>
+                {% endif %}
+            </div>
+        </article>
+    {% empty %}
+        <div class="empty-card">Hozircha bu bo'limda bron yo'q.</div>
+    {% endfor %}
+</section>
+{% endblock %}
